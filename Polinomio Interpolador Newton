@@ -1,0 +1,39 @@
+npontos = int(input("Quantos pontos são?"))
+pts,fun_pts = [],[]
+tab = []
+for i in range(npontos):
+    pt = float(input('x%d='%i))
+    fun_pt = float(input('f(x%d)='%i))
+    pts.append(pt)
+    fun_pts.append(fun_pt)
+
+tab.append(fun_pts)
+    
+x=float(input("Qual o valor de x cujo valor de função será estimado?\n"))
+    
+passo = 1
+for n in range(npontos-1):
+    ordem = []
+    for k in range(len(tab[n])-1):
+        difdiv = (tab[n][k+1] - tab[n][k])/(pts[k+passo]-pts[k-passo])
+        ordem.append(difdiv)
+    tab.append(ordem)
+    passo +=1
+for m in range(len(tab)):
+    print('Ordem %d:'%m, tab[m])
+print()
+
+aprox = 0
+grau = 0
+for j in range(len(tab)):
+    fator = tab[i][0]
+    for l in range(grau):
+        fator*=(x-pts[j])
+    grau+=-1
+    aprox +=fator
+print('O valor é f(%f) = %f'%(x,aprox))
+cont=m
+while(cont>-1):
+    print("+",tab[cont][0],"x^%d"%cont,end="")
+    cont-=1
+    
