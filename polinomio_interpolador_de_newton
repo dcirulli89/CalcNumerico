@@ -1,0 +1,42 @@
+n = int(input("Quantos pontos serão utilizados?"))
+X = []
+Y = []
+for i in range(n):
+    x = float(input("x"+str(i)+" ="))
+    X.append(x)
+    y = float(input("y"+str(i)+" ="))
+    Y.append(y)
+ 
+ def newton_interpolation(x, y, xi):
+    #Número de pontos
+    n = len(x)
+    #Inicialização das diferenças divididas
+    fdd = [[None for x in range(n)] for x in range(n)]
+    #Diferentes graus dos valores de f(x)
+    yint = [None for x in range(n)]
+    #Valor do erro
+    ea = [None for x in range(n)]
+    
+    #Determinando diferenças divididas
+    for i in range(n):
+        fdd[i][0] = y[i]
+    for j in range(1,n):
+        for i in range(n-j):
+            fdd[i][j] = (fdd[i+1][j-1] - fdd[i][j-1])/(x[i+j]-x[i])
+    
+    #Imprimindo valores da tabela de diferenças divididas
+    fdd_table = pd.DataFrame(fdd)
+    print(fdd_table)
+    
+    #Interpolando o valor desejado de x
+    xterm = 1
+    yint[0] = fdd[0][0]
+    for order in range(1, n):
+        xterm = xterm * (xi - x[order-1])
+        yint2 = yint[order-1] + fdd[0][order]*xterm
+        ea[order-1] = yint2 - yint[order-1]
+        yint[order] = yint2
+    
+    return map(lambda yy, ee : [yy, ee], yint, ea)
+    
+newton_interpolation(X, Y, xi)
