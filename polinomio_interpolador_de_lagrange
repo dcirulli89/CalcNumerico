@@ -1,0 +1,34 @@
+# Lagrange Interpolation
+
+# Biblioteca NumPy - útil para o programa
+import numpy as np
+
+# Lendo o número de pontos analisados
+n = int(input('Qual o número de pontos? '))
+
+# Armazenando valores de x e y dos pontos analisados.
+x = np.zeros((n))
+y = np.zeros((n))
+
+print('Digite os valores dos pontos a serem analisados: ')
+for i in range(n):
+    x[i] = float(input( 'x'+str(i)+'= '))
+    y[i] = float(input( 'f(x'+str(i)+')= '))
+
+
+# Ler o valor de x a ser interpolado
+xp = float(input('Qual o valor de x a ser interpolado?\n'))
+
+# Setando o valor inicial da interpolação como 0
+yp = 0
+
+# Implementando o método de Lagrange
+for i in range(n):
+    p = 1
+    for j in range(n):
+        if i != j:
+            p = p * (xp - x[j])/(x[i] - x[j])
+    yp = yp + p * y[i]    
+
+# Imprimindo o valor interpolado
+print('O valor interpolado é f(%.3f) =  %.3f.' % (xp, yp))
